@@ -1,0 +1,47 @@
+/* Remove espaços padrão, margens e paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Define estilos base para html e body */
+html {
+  font-size: 100%; /* Base de 16px */
+  line-height: 1.5;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remova decorações padrão de links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Zera listas */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Garanta consistência de imagens */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Normalize botões */
+button {
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
