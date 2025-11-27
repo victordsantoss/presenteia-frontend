@@ -28,11 +28,14 @@ const buttons = [
 export function Banner() {
   return (
     <Box
+      id="inicio"
+      component="section"
       sx={{
         bgcolor: 'background.default',
         py: { xs: 8, md: 12 },
         position: 'relative',
         overflow: 'hidden',
+        scrollMarginTop: '100px',
         '&::before': {
           content: '""',
           position: 'absolute',

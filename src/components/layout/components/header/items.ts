@@ -7,14 +7,18 @@ export interface MenuItem {
 export const menuItems: MenuItem[] = [
   {
     label: 'Início',
-    href: '/',
+    href: '#inicio',
   },
   {
-    label: 'Sobre',
-    href: '/sobre',
+    label: 'Como Funciona',
+    href: '#como-funciona',
   },
   {
-    label: 'Contato',
-    href: '/contato',
+    label: 'Eventos',
+    href: '#eventos',
+  },
+  {
+    label: 'Depoimentos',
+    href: '#depoimentos',
   },
 ]

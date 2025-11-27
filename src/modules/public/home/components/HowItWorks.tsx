@@ -31,10 +31,12 @@ const steps = [
 export function HowItWorks() {
   return (
     <Box
+      id="como-funciona"
       component="section"
       sx={{
         py: { xs: 8, md: 12 },
         bgcolor: 'background.paper',
+        scrollMarginTop: '100px',
       }}
     >
       <Container maxWidth="lg">

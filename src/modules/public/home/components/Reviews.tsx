@@ -67,10 +67,12 @@ function StarRating({ rating }: { rating: number }) {
 export function Reviews() {
   return (
     <Box
+      id="depoimentos"
       component="section"
       sx={{
         py: { xs: 8, md: 12 },
         bgcolor: 'background.paper',
+        scrollMarginTop: '100px',
       }}
     >
       <Box sx={{ px: { xs: 2, md: 4 } }}>

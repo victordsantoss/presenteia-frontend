@@ -7,12 +7,14 @@ import Link from 'next/link'
 export function GiftList() {
   return (
     <Box
+      id="criar-lista"
       component="section"
       sx={{
         py: { xs: 10, md: 14 },
-        bgcolor: 'primary.main',
+        bgcolor: 'background.default',
         position: 'relative',
         overflow: 'hidden',
+        scrollMarginTop: '100px',
         '&::before': {
           content: '""',
           position: 'absolute',
@@ -20,9 +22,9 @@ export function GiftList() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: `linear-gradient(135deg, 
-            rgba(19, 41, 61, 0.3) 0%, 
-            rgba(45, 130, 183, 0.1) 100%)`,
+          // background: `linear-gradient(135deg,
+          //   rgba(19, 41, 61, 0.3) 0%,
+          //   rgba(45, 130, 183, 0.1) 100%)`,
           zIndex: 0,
         },
         '&::after': {
@@ -82,7 +84,7 @@ export function GiftList() {
             sx={{
               fontWeight: 800,
               fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-              color: 'primary.contrastText',
+              color: 'text.primary',
               mb: 1,
               lineHeight: 1.2,
             }}
@@ -95,7 +97,7 @@ export function GiftList() {
             sx={{
               fontWeight: 400,
               fontSize: { xs: '1rem', md: '1.125rem' },
-              color: 'rgba(255, 255, 255, 0.9)',
+              color: 'text.primary',
               lineHeight: 1.8,
               maxWidth: '600px',
               mb: 2,
@@ -162,7 +164,8 @@ export function GiftList() {
           width: '400px',
           height: '400px',
           borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.08)',
+          bgcolor: 'primary.light',
+          opacity: 0.3,
           zIndex: 0,
           display: { xs: 'none', md: 'block' },
         }}
@@ -177,7 +180,8 @@ export function GiftList() {
           width: '200px',
           height: '200px',
           borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.05)',
+          bgcolor: 'primary.main',
+          opacity: 0.15,
           zIndex: 0,
           display: { xs: 'none', lg: 'block' },
         }}
@@ -192,7 +196,8 @@ export function GiftList() {
           width: '150px',
           height: '150px',
           borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.06)',
+          bgcolor: 'primary.light',
+          opacity: 0.4,
           zIndex: 0,
           display: { xs: 'none', md: 'block' },
         }}
@@ -207,7 +212,8 @@ export function GiftList() {
           width: '250px',
           height: '250px',
           borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.04)',
+          bgcolor: 'primary.main',
+          opacity: 0.1,
           zIndex: 0,
           display: { xs: 'none', lg: 'block' },
         }}
@@ -222,7 +228,8 @@ export function GiftList() {
           width: '120px',
           height: '120px',
           borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.07)',
+          bgcolor: 'primary.light',
+          opacity: 0.5,
           zIndex: 0,
           display: { xs: 'none', md: 'block' },
         }}
@@ -237,7 +244,104 @@ export function GiftList() {
           width: '100px',
           height: '100px',
           borderRadius: '50%',
-          background: 'rgba(255, 255, 255, 0.05)',
+          bgcolor: 'primary.main',
+          opacity: 0.2,
+          zIndex: 0,
+          display: { xs: 'none', xl: 'block' },
+        }}
+      />
+
+      {/* Círculo Extra - Topo Direita */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '8%',
+          right: '5%',
+          width: '180px',
+          height: '180px',
+          borderRadius: '50%',
+          bgcolor: 'primary.light',
+          opacity: 0.25,
+          zIndex: 0,
+          display: { xs: 'none', lg: 'block' },
+        }}
+      />
+
+      {/* Círculo Mini - Centro Esquerda */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '12%',
+          width: '80px',
+          height: '80px',
+          borderRadius: '50%',
+          bgcolor: 'primary.main',
+          opacity: 0.18,
+          zIndex: 0,
+          display: { xs: 'none', md: 'block' },
+        }}
+      />
+
+      {/* Círculo Médio - Direita Baixo */}
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: '5%',
+          right: '8%',
+          width: '220px',
+          height: '220px',
+          borderRadius: '50%',
+          bgcolor: 'primary.light',
+          opacity: 0.35,
+          zIndex: 0,
+          display: { xs: 'none', lg: 'block' },
+        }}
+      />
+
+      {/* Círculo Mini - Topo Centro-Esquerda */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '25%',
+          left: '35%',
+          width: '90px',
+          height: '90px',
+          borderRadius: '50%',
+          bgcolor: 'primary.main',
+          opacity: 0.12,
+          zIndex: 0,
+          display: { xs: 'none', xl: 'block' },
+        }}
+      />
+
+      {/* Círculo Pequeno - Centro-Direita */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '60%',
+          right: '25%',
+          width: '130px',
+          height: '130px',
+          borderRadius: '50%',
+          bgcolor: 'primary.light',
+          opacity: 0.28,
+          zIndex: 0,
+          display: { xs: 'none', md: 'block' },
+        }}
+      />
+
+      {/* Círculo Extra Grande - Fundo Centro */}
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: '10%',
+          left: '30%',
+          width: '350px',
+          height: '350px',
+          borderRadius: '50%',
+          bgcolor: 'primary.main',
+          opacity: 0.08,
           zIndex: 0,
           display: { xs: 'none', xl: 'block' },
         }}

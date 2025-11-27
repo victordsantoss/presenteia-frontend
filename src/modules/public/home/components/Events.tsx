@@ -67,11 +67,13 @@ const events = [
 export function Events() {
   return (
     <Box
+      id="eventos"
       component="section"
       sx={{
         py: { xs: 8, md: 12 },
         bgcolor: 'background.default',
         overflow: 'hidden',
+        scrollMarginTop: '100px',
       }}
     >
       <Box sx={{ px: { xs: 2, md: 4 } }}>
