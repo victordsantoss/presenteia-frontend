@@ -11,7 +11,7 @@ export function Footer() {
     <Box
       component="footer"
       sx={{
-        bgcolor: 'primary.light',
+        bgcolor: 'secondary.light',
         color: 'primary.contrastText',
         pt: 6,
         pb: 3,
@@ -136,7 +136,7 @@ export function Footer() {
             gap: 2,
           }}
         >
-          <Typography variant="body2" sx={{ opacity: 0.7 }}>
+          <Typography variant="body2" sx={{ opacity: 0.7 }} suppressHydrationWarning>
             © {currentYear} {companyInfo.name}. Todos os direitos reservados.
           </Typography>
           <Box sx={{ display: 'flex', gap: 3 }}>

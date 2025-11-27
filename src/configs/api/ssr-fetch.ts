@@ -28,13 +28,29 @@ export const apiFetch = async <T, Q extends QueryParams = QueryParams>(
     ...options.headers,
   }
 
+  console.log(`[API Request] ${options.method || 'GET'} ${url.toString()}`)
+
   const response = await fetch(url.toString(), {
     headers,
     body: body ? JSON.stringify(body) : undefined,
     ...rest,
   })
 
-  const data = await response.json()
+  let data
+  const contentType = response.headers.get('content-type')
+  
+  if (contentType?.includes('application/json')) {
+    try {
+      data = await response.json()
+    } catch (error) {
+      console.error('Failed to parse JSON response:', error)
+      data = { message: 'Invalid JSON response from server' }
+    }
+  } else {
+    const text = await response.text()
+    console.error('Non-JSON response received:', text.substring(0, 200))
+    data = { message: text.substring(0, 200) || 'Server returned non-JSON response' }
+  }
 
   return {
     ok: response.ok,

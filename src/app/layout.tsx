@@ -1,10 +1,7 @@
 import type { Metadata } from 'next'
-import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import defaultTheme from '@/configs/styles/theme/default-theme'
 import './globals.css'
 import '@/configs/styles/reset.css'
-import { PublicLayout } from '@/components/layout/Public'
+import { AppProviders } from '@/providers/app-providers'
 
 export const metadata: Metadata = {
   title: 'Presenteia',
@@ -19,10 +16,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <ThemeProvider theme={defaultTheme}>
-          <CssBaseline />
-          <PublicLayout>{children} </PublicLayout>
-        </ThemeProvider>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   )

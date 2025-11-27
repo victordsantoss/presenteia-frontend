@@ -15,10 +15,10 @@ const defaultTheme = createTheme({
       contrastText: '#1B1F27',
     },
     secondary: {
-      light: '#ffebd4',
-      main: '#006A9F',
-      dark: '#B6894A',
-      contrastText: '#FAFAFA',
+      light: '#CAF0F8',
+      main: '#90E0EF',
+      dark: '#006A9F',
+      contrastText: '#03045E',
     },
     background: {
       default: '#FAFAFA',

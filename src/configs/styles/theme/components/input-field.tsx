@@ -42,10 +42,10 @@ export const TextFieldStyles: TextFieldOverrides = {
         },
         '&.Mui-focused': {
           backgroundColor: 'rgba(255, 255, 255, 1)',
-          borderBottomColor: `${theme.palette.line.primary} !important`,
+          borderBottomColor: `${theme.palette.primary.main} !important`,
         },
         '&:after': {
-          borderBottomColor: `${theme.palette.line.primary} !important`,
+          borderBottomColor: `${theme.palette.primary.main} !important`,
         },
       }),
       input: ({ theme }) => ({
@@ -61,13 +61,13 @@ export const TextFieldStyles: TextFieldOverrides = {
     styleOverrides: {
       root: ({ theme }) => ({
         '& .MuiOutlinedInput-notchedOutline': {
-          borderColor: `${theme.palette.line.secondary} !important`,
+          borderColor: `${theme.palette.divider} !important`,
         },
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-          borderColor: `${theme.palette.line.secondary} !important`,
+          borderColor: `${theme.palette.primary.main} !important`,
         },
         '&:hover .MuiOutlinedInput-notchedOutline': {
-          borderColor: `${theme.palette.line.secondary} !important`,
+          borderColor: `${theme.palette.primary.main} !important`,
         },
       }),
       input: ({ theme }) => ({

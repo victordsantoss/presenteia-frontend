@@ -49,18 +49,29 @@ export function Header({ onMenuClick }: HeaderProps) {
                     color: 'primary.main',
                   }}
                 />
-                <Typography
-                  variant="h5"
-                  component="div"
-                  sx={{
-                    fontWeight: 700,
-                    color: 'primary.contrastText',
-                    fontSize: { xs: '2rem', md: '2rem' },
-                  }}
-                >
-                  Presenteia
-                  <span style={{ fontSize: '0.8rem', color: 'primary.main' }}>.com.br</span>
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 0.3 }}>
+                  <Typography
+                    variant="h5"
+                    component="div"
+                    sx={{
+                      fontWeight: 700,
+                      color: 'primary.contrastText',
+                      fontSize: { xs: '2rem', md: '2rem' },
+                    }}
+                  >
+                    Presenteia
+                  </Typography>
+                  <Typography
+                    component="span"
+                    sx={{
+                      fontSize: '0.8rem',
+                      color: 'primary.main',
+                      fontWeight: 700,
+                    }}
+                  >
+                    .com.br
+                  </Typography>
+                </Box>
               </Box>
             </Link>
           </Box>
