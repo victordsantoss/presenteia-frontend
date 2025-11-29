@@ -17,6 +17,8 @@ import {
   Alert,
   CircularProgress,
   Snackbar,
+  Tooltip,
+  IconButton,
 } from '@mui/material'
 import {
   CardGiftcard as GiftIcon,
@@ -24,13 +26,15 @@ import {
   LocalOffer as PriceIcon,
   Inventory as QuantityIcon,
   TrendingUp as PriorityIcon,
+  InfoOutlined as InfoIcon,
 } from '@mui/icons-material'
 import { useMutation } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
-import { Gift } from '@/services/domain/gift.types'
+import { Gift, GiftAvailabilityStatus } from '@/services/domain/gift.types'
 import { formatCurrency } from '@/common/utils/format'
 import { GiftService } from '@/services/client/gift.service'
 import { GiftReservationModal } from './GiftReservationModal'
+import { GiftFilterList } from './GiftFilterList'
 
 interface GiftListProps {
   eventId: string
@@ -38,18 +42,30 @@ interface GiftListProps {
 }
 
 // Cache de presentes por categoria
-const giftsCache = new Map<string, Gift.IGetGiftListResponse[]>()
+const giftsCache = new Map<string, Gift.IGiftItem[]>()
 
 export function GiftList({ eventId, categories }: GiftListProps) {
   const [selectedTab, setSelectedTab] = useState(0)
-  const [gifts, setGifts] = useState<Gift.IGetGiftListResponse[]>([])
+  const [gifts, setGifts] = useState<Gift.IGiftItem[]>([])
   const [error, setError] = useState<string | null>(null)
-  const [selectedGift, setSelectedGift] = useState<Gift.IGetGiftListResponse | null>(null)
+  const [selectedGift, setSelectedGift] = useState<Gift.IGiftItem | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [filters, setFilters] = useState<{
+    search: string
+    status: GiftAvailabilityStatus
+  }>({
+    search: '',
+    status: GiftAvailabilityStatus.ALL,
+  })
 
   const { mutate: fetchGifts, isPending } = useMutation({
-    mutationFn: (payload?: { categoryId?: string }) => GiftService.getGiftList(eventId, payload),
+    mutationFn: (payload?: Partial<Gift.IGetGiftListRequest>) => 
+      GiftService.getGiftList(eventId, { 
+        limit: 100, // Limite alto inicialmente, como solicitado
+        page: 1,
+        ...payload 
+      }),
     onError: (err) => {
       if (isAxiosError(err)) {
         setError(err.response?.data?.message || 'Erro ao buscar presentes')
@@ -57,44 +73,41 @@ export function GiftList({ eventId, categories }: GiftListProps) {
         setError('Erro ao buscar presentes')
       }
     },
-    onSuccess: (data, variables) => {
-      const cacheKey = variables?.categoryId || 'all'
-      giftsCache.set(cacheKey, data)
-      setGifts(data)
+    onSuccess: (response, variables) => {
+      const cacheKey = JSON.stringify(variables)
+      giftsCache.set(cacheKey, response.data)
+      setGifts(response.data)
       setError(null)
     },
   })
 
-  // Busca inicial - todos os presentes
+  // Busca presentes quando filtros ou categoria mudam
   useEffect(() => {
-    if (!giftsCache.has('all')) {
-      fetchGifts(undefined)
-    } else {
-      setGifts(giftsCache.get('all')!)
+    const categoryId = selectedTab === 0 ? undefined : categories[selectedTab - 1]?.id
+    const payload = {
+      categoryId,
+      search: filters.search || undefined,
+      status: filters.status !== GiftAvailabilityStatus.ALL ? filters.status : undefined,
     }
+    fetchGifts(payload)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [filters, selectedTab])
 
   const handleTabChange = useCallback(
     (_event: React.SyntheticEvent, newValue: number) => {
       setSelectedTab(newValue)
-
-      const categoryId = newValue === 0 ? undefined : categories[newValue - 1].id
-      const cacheKey = categoryId || 'all'
-
-      // Verificar cache primeiro
-      if (giftsCache.has(cacheKey)) {
-        setGifts(giftsCache.get(cacheKey)!)
-        return
-      }
-
-      // Buscar do servidor
-      fetchGifts({ categoryId })
     },
-    [categories, fetchGifts]
+    []
   )
 
-  const handleOpenReservationModal = (gift: Gift.IGetGiftListResponse) => {
+  const handleFilterChange = useCallback(
+    (newFilters: { search: string; status: GiftAvailabilityStatus }) => {
+      setFilters(newFilters)
+    },
+    []
+  )
+
+  const handleOpenReservationModal = (gift: Gift.IGiftItem) => {
     setSelectedGift(gift)
     setIsModalOpen(true)
   }
@@ -106,9 +119,10 @@ export function GiftList({ eventId, categories }: GiftListProps) {
 
   const handleReservationSuccess = () => {
     setShowSuccessMessage(true)
-    // Limpar cache e recarregar presentes
+    // Limpar cache e forçar recarga dos filtros atuais
     giftsCache.clear()
-    fetchGifts(selectedTab === 0 ? undefined : { categoryId: categories[selectedTab - 1].id })
+    // Força re-render do useEffect mantendo os mesmos filtros
+    setFilters({ ...filters })
   }
 
   const getPriorityColor = (priority: string) => {
@@ -145,7 +159,7 @@ export function GiftList({ eventId, categories }: GiftListProps) {
         bgcolor: 'background.paper',
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         {/* Título */}
         <Box
           sx={{
@@ -213,6 +227,9 @@ export function GiftList({ eventId, categories }: GiftListProps) {
             ))}
           </Tabs>
         </Box>
+
+        {/* Filtros */}
+        <GiftFilterList onFilterChange={handleFilterChange} />
 
         {/* Loading */}
         {isPending && (
@@ -366,11 +383,38 @@ export function GiftList({ eventId, categories }: GiftListProps) {
 
                       {/* Preço e Quantidade */}
                       <Stack direction="column" spacing={2} sx={{ mb: 2 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'start', gap: 0.5 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                           <Typography variant="body2" fontWeight={600}>
                             Preço médio: {formatCurrency(gift.price)}
                           </Typography>
-                          <PriceIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
+                          <Tooltip 
+                            title="Valor estimado com base em pesquisas realizadas. Este é apenas um valor de referência para compreensão do presente."
+                            arrow
+                            placement="top"
+                            componentsProps={{
+                              tooltip: {
+                                sx: {
+                                  backgroundColor: 'info.main',
+                                  color: 'white',
+                                  fontSize: '0.875rem',
+                                  '& .MuiTooltip-arrow': {
+                                    color: 'info.main',
+                                  },
+                                },
+                              },
+                            }}
+                          >
+                            <IconButton 
+                              size="small" 
+                              sx={{ 
+                                p: 0, 
+                                ml: 0.5,
+                                '&:hover': { bgcolor: 'transparent' } 
+                              }}
+                            >
+                              <InfoIcon sx={{ fontSize: 16, color: 'info.main' }} />
+                            </IconButton>
+                          </Tooltip>
                         </Box>
                       </Stack>
                     

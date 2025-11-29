@@ -13,7 +13,6 @@ export default function EventDetailPage({ data, categories }: EventDetailPagePro
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <Header data={data} />
-      
       <GiftList eventId={data.id} categories={categories} />
     </Box>
   )

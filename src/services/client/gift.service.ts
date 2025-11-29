@@ -4,10 +4,10 @@ import { Gift } from '../domain/gift.types';
 export const GiftService = {
   getGiftList: async (
     eventId: string,
-    payload?: { categoryId?: string }
-  ): Promise<Gift.IGetGiftListResponse[]> => {
+    payload?: Partial<Gift.IGetGiftListRequest>
+  ): Promise<Gift.IGetGiftListResponse> => {
     const { data } = await api.get(`/gifts/events/${eventId}`, { 
-      params: payload?.categoryId ? { categoryId: payload.categoryId } : undefined 
+      params: payload 
     });
     return data;
   },

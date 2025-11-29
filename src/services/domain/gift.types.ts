@@ -1,13 +1,24 @@
+import { IPaginatedRequest, IPaginatedResponse } from '@/common/types/base-pagination.types'
+
+export enum GiftAvailabilityStatus {
+  ALL = 'ALL',
+  AVAILABLE = 'AVAILABLE',
+  RESERVED = 'RESERVED',
+}
+
 export namespace Gift {
     export type IGetEventGiftCategoryResponse = {
       id: string;
       name: string;
     };
-    export type IGetGiftListRequest = {
-        eventId: string;
+    
+    export interface IGetGiftListRequest extends IPaginatedRequest {
         categoryId?: string;
-    };
-    export type IGetGiftListResponse = {  
+        status?: GiftAvailabilityStatus;
+        search?: string;
+    }
+    
+    export type IGiftItem = {  
         id: string;
         name: string;
         description: string;
@@ -29,9 +40,16 @@ export namespace Gift {
             reservedAt: string;
             contributionAmount: number;
         }[];
+        links: {
+            id: string;
+            url: string;
+            createdAt: string;
+        }[];
         createdAt: string;
         updatedAt: string;
       }
+    
+    export type IGetGiftListResponse = IPaginatedResponse<IGiftItem>
     export type IReserveGiftRequest = {
         contributionAmount: number;
         message: string;

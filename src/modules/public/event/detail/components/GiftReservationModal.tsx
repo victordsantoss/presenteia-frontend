@@ -19,8 +19,8 @@ import {
   Person as PersonIcon,
   Email as EmailIcon,
   Phone as PhoneIcon,
-  AttachMoney as MoneyIcon,
   Message as MessageIcon,
+  Link as LinkIcon,
 } from '@mui/icons-material'
 import { useMutation } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
@@ -31,7 +31,7 @@ import { formatCurrency } from '@/common/utils/format'
 interface GiftReservationModalProps {
   open: boolean
   onClose: () => void
-  gift: Gift.IGetGiftListResponse | null
+  gift: Gift.IGiftItem | null
   onSuccess?: () => void
 }
 
@@ -40,7 +40,6 @@ export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftRes
     guestName: '',
     guestEmail: '',
     guestPhone: '',
-    contributionAmount: '',
     message: '',
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -67,7 +66,6 @@ export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftRes
       guestName: '',
       guestEmail: '',
       guestPhone: '',
-      contributionAmount: '',
       message: '',
     })
     setErrors({})
@@ -92,17 +90,6 @@ export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftRes
       newErrors.guestPhone = 'Telefone é obrigatório'
     }
 
-    if (!formData.contributionAmount) {
-      newErrors.contributionAmount = 'Valor é obrigatório'
-    } else {
-      const amount = parseFloat(formData.contributionAmount)
-      if (isNaN(amount) || amount <= 0) {
-        newErrors.contributionAmount = 'Valor inválido'
-      } else if (gift && amount > gift.price) {
-        newErrors.contributionAmount = `Valor não pode ser maior que ${formatCurrency(gift.price)}`
-      }
-    }
-
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -117,7 +104,7 @@ export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftRes
       guestName: formData.guestName,
       guestEmail: formData.guestEmail,
       guestPhone: formData.guestPhone,
-      contributionAmount: parseFloat(formData.contributionAmount),
+      contributionAmount: gift?.price || 0,
       message: formData.message,
     })
   }
@@ -173,19 +160,74 @@ export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftRes
             }}
           >
             <Stack spacing={1}>
-              <Typography variant="body2" color="text.primary">
-                Valor do presente
+              <Typography variant="body2" color="text.primary" fontWeight={500}>
+                Valor médio do presente
               </Typography>
               <Typography variant="h6" fontWeight={700} color="primary.main">
                 {formatCurrency(gift.price)}
               </Typography>
-              {gift.allowMultipleContributions && (
-                <Typography variant="caption" color="text.secondary">
-                  Este presente aceita contribuições parciais
-                </Typography>
-              )}
+              <Typography variant="caption" color="text.primary" sx={{ fontStyle: 'italic' }}>
+                Valor estimado com base em pesquisas realizadas. Este é apenas um valor de referência para compreensão do presente.
+              </Typography>
             </Stack>
           </Box>
+
+          {/* Links Sugeridos */}
+          {gift.links && gift.links.length > 0 && (
+            <Box
+              sx={{
+                mb: 3,
+                p: 2,
+                bgcolor: 'primary.light',
+                borderRadius: 2,
+                border: '1px solid',
+                borderColor: 'primary.main',
+              }}
+            >
+              <Typography
+                variant="subtitle2"
+                fontWeight={700}
+                color="primary.dark"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                  mb: 1.5,
+                }}
+              >
+                <LinkIcon sx={{ fontSize: 20 }} />
+                Links sugeridos para compra
+              </Typography>
+              <Stack spacing={1}>
+                {gift.links.map((link) => (
+                  <Button
+                    key={link.id}
+                    variant="outlined"
+                    size="small"
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      justifyContent: 'flex-start',
+                      textTransform: 'none',
+                      fontWeight: 600,
+                      bgcolor: 'white',
+                      color: 'primary.main',
+                      borderColor: 'primary.main',
+                      '&:hover': {
+                        bgcolor: 'primary.main',
+                        color: 'white',
+                        borderColor: 'primary.main',
+                      },
+                    }}
+                  >
+                    <LinkIcon sx={{ fontSize: 16, mr: 1 }} />
+                    {new URL(link.url).hostname.replace('www.', '')}
+                  </Button>
+                ))}
+              </Stack>
+            </Box>
+          )}
 
           <Stack spacing={2.5}>
             {/* Nome */}
@@ -242,31 +284,6 @@ export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftRes
                 startAdornment: (
                   <InputAdornment position="start">
                     <PhoneIcon color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            {/* Valor da Contribuição */}
-            <TextField
-              fullWidth
-              label="Valor da Contribuição"
-              type="number"
-              required
-              value={formData.contributionAmount}
-              onChange={(e) => setFormData({ ...formData, contributionAmount: e.target.value })}
-              error={!!errors.contributionAmount}
-              helperText={errors.contributionAmount || `Valor máximo: ${formatCurrency(gift.price)}`}
-              disabled={isPending}
-              inputProps={{
-                min: 0,
-                max: gift.price,
-                step: 0.01,
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <MoneyIcon color="action" />
                   </InputAdornment>
                 ),
               }}
