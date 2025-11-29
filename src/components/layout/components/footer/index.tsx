@@ -3,6 +3,7 @@
 import { Box, Container, Typography, Link as MuiLink, IconButton, Divider } from '@mui/material'
 import Link from 'next/link'
 import { companyInfo, quickLinks, supportLinks, socialLinks, footerBottomLinks } from './items'
+import { DisabledTooltip } from '@/components/DisabledTooltip'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -100,24 +101,22 @@ export function Footer() {
               {socialLinks.map((social) => {
                 const IconComponent = social.icon
                 return (
-                  <IconButton
-                    key={social.label}
-                    aria-label={social.label}
-                    component="a"
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      color: 'primary.contrastText',
-                      bgcolor: 'rgba(255, 255, 255, 0.1)',
-                      '&:hover': {
-                        bgcolor: 'primary.light',
-                        color: 'primary.main',
-                      },
-                    }}
-                  >
-                    <IconComponent />
-                  </IconButton>
+                  <DisabledTooltip key={social.label} title="Em breve!">
+                    <IconButton
+                      aria-label={social.label}
+                      component="button"
+                      sx={{
+                        color: 'primary.contrastText',
+                        bgcolor: 'rgba(255, 255, 255, 0.1)',
+                        '&:hover': {
+                          bgcolor: 'primary.light',
+                          color: 'primary.main',
+                        },
+                      }}
+                    >
+                      <IconComponent />
+                    </IconButton>
+                  </DisabledTooltip>
                 )
               })}
             </Box>

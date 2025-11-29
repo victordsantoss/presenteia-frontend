@@ -17,13 +17,36 @@ import {
 } from '@mui/material'
 import { Menu as MenuIcon, Close as CloseIcon, CardGiftcard as GiftIcon } from '@mui/icons-material'
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import { menuItems } from './items'
+import { DisabledTooltip } from '@/components/DisabledTooltip'
 
 export function HeaderMobile() {
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const pathname = usePathname()
+  const router = useRouter()
+  const isHome = pathname === '/'
 
   const toggleDrawer = (open: boolean) => () => {
     setDrawerOpen(open)
+  }
+
+  const handleMenuClick = (e: React.MouseEvent, href: string, anchor?: string) => {
+    setDrawerOpen(false)
+    
+    // Se estiver na home e tiver âncora, faz scroll suave
+    if (isHome && anchor) {
+      e.preventDefault()
+      const element = document.getElementById(anchor)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+    // Se não estiver na home, redireciona para /#ancora
+    else if (!isHome && anchor) {
+      e.preventDefault()
+      router.push(href)
+    }
   }
 
   return (
@@ -98,6 +121,9 @@ export function HeaderMobile() {
               </Box>
             </Box>
           </Link>
+
+          {/* Botão Login - Direita (removido do mobile, fica só no drawer) */}
+          <Box sx={{ width: 40 }} /> {/* Spacer para manter logo centralizada */}
         </Toolbar>
       </AppBar>
 
@@ -145,10 +171,9 @@ export function HeaderMobile() {
                 <ListItemButton
                   component={Link}
                   href={item.href}
-                  onClick={toggleDrawer(false)}
+                  onClick={(e) => handleMenuClick(e, item.href, item.anchor)}
                   sx={{
-                    my:0,
-                    py:0,
+                    py: 0,
                     '&:hover': {
                       bgcolor: 'primary.light',
                     },
@@ -156,6 +181,10 @@ export function HeaderMobile() {
                 >
                   <ListItemText
                     primary={item.label}
+                    primaryTypographyProps={{
+                      fontWeight: 500,
+                      color: 'primary.contrastText',
+                    }}
                   />
                 </ListItemButton>
               </ListItem>
@@ -166,21 +195,21 @@ export function HeaderMobile() {
 
           {/* Login no Menu */}
           <Box sx={{ p: 2 }}>
-            <Button
-              component={Link}
-              href="/login"
-              variant="contained"
-              fullWidth
-              onClick={toggleDrawer(false)}
-              sx={{
-                bgcolor: 'primary.dark',
-                color: 'text.secondary',
-                fontWeight: 600,
-                textTransform: 'none',
-              }}
-            >
-              Entrar
-            </Button>
+            <DisabledTooltip title="Em breve!">
+              <Button
+                component="button"
+                variant="contained"
+                fullWidth
+                sx={{
+                  bgcolor: 'primary.dark',
+                  color: 'text.secondary',
+                  fontWeight: 600,
+                  textTransform: 'none',
+                }}
+              >
+                Entrar
+              </Button>
+            </DisabledTooltip>
           </Box>
         </Box>
       </Drawer>

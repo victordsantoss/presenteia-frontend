@@ -3,6 +3,7 @@
 import { Box, Typography, Button, Container } from '@mui/material'
 import { CardGiftcard as GiftIcon, Add as AddIcon } from '@mui/icons-material'
 import Link from 'next/link'
+import { DisabledTooltip } from '@/components/DisabledTooltip'
 
 export function GiftList() {
   return (
@@ -108,33 +109,34 @@ export function GiftList() {
           </Typography>
 
           {/* CTA Button */}
-          <Button
-            component={Link}
-            href="/criar-lista"
-            variant="contained"
-            size="large"
-            startIcon={<AddIcon />}
-            sx={{
-              bgcolor: 'primary.light',
-              color: 'primary.dark',
-              px: 5,
-              py: 2,
-              fontSize: '1.125rem',
-              fontWeight: 700,
-              textTransform: 'none',
-              borderRadius: 3,
-              boxShadow: 4,
-              mt: 2,
-              '&:hover': {
-                bgcolor: 'primary.contrastText',
-                boxShadow: 6,
-                transform: 'translateY(-2px)',
-                transition: 'all 0.3s',
-              },
-            }}
-          >
-            Criar minha lista agora
-          </Button>
+          <DisabledTooltip title="Em breve!">
+            <Button
+              component="button"
+              variant="contained"
+              size="large"
+              startIcon={<AddIcon />}
+              sx={{
+                bgcolor: 'primary.light',
+                color: 'primary.dark',
+                px: 5,
+                py: 2,
+                fontSize: '1.125rem',
+                fontWeight: 700,
+                textTransform: 'none',
+                borderRadius: 3,
+                boxShadow: 4,
+                mt: 2,
+                '&:hover': {
+                  bgcolor: 'primary.contrastText',
+                  boxShadow: 6,
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.3s',
+                },
+              }}
+            >
+              Criar minha lista agora
+            </Button>
+          </DisabledTooltip>
 
           {/* Badge Adicional */}
           <Box

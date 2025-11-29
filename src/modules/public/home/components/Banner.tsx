@@ -3,6 +3,7 @@
 import { Box, Container, Typography, Button, Stack } from '@mui/material'
 import { Add as AddIcon, Search as SearchIcon } from '@mui/icons-material'
 import Link from 'next/link'
+import { DisabledTooltip } from '@/components/DisabledTooltip'
 
 const badges = [
   { icon: '✨', text: 'Grátis para sempre' },
@@ -16,12 +17,16 @@ const buttons = [
     href: '/criar-lista',
     variant: 'contained',
     icon: AddIcon,
+    disabled: true,
+    tooltipText: 'Em breve!',
   },
   {
     label: 'Buscar uma lista',
     href: '/buscar-lista',
     variant: 'outlined',
     icon: SearchIcon,
+    disabled: true,
+    tooltipText: 'Em breve!',
   },
 ] as const
 
@@ -117,11 +122,11 @@ export function Banner() {
           >
             {buttons.map((button) => {
               const IconComponent = button.icon
-              return (
+              const buttonElement = (
                 <Button
                   key={button.href}
-                  component={Link}
-                  href={button.href}
+                  component={button.disabled ? 'button' : Link}
+                  href={button.disabled ? undefined : button.href}
                   variant={button.variant}
                   color="primary"
                   size="large"
@@ -154,6 +159,14 @@ export function Banner() {
                 >
                   {button.label}
                 </Button>
+              )
+
+              return button.disabled ? (
+                <DisabledTooltip key={button.href} title={button.tooltipText}>
+                  {buttonElement}
+                </DisabledTooltip>
+              ) : (
+                buttonElement
               )
             })}
           </Stack>

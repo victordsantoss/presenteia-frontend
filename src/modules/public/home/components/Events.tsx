@@ -12,6 +12,7 @@ import {
   WorkspacePremium as AnniversaryIcon,
 } from '@mui/icons-material'
 import Link from 'next/link'
+import { DisabledTooltip } from '@/components/DisabledTooltip'
 
 const events = [
   {
@@ -227,18 +228,19 @@ export function Events() {
                   </Typography>
 
                   {/* Botão */}
-                  <Button
-                    component={Link}
-                    href="/criar-lista"
-                    variant="outlined"
-                    fullWidth
-                    sx={{
-                      textTransform: 'none',
-                      borderWidth: 2,
-                    }}
-                  >
-                    Criar lista
-                  </Button>
+                  <DisabledTooltip title="Em breve!">
+                    <Button
+                      component="button"
+                      variant="outlined"
+                      fullWidth
+                      sx={{
+                        textTransform: 'none',
+                        borderWidth: 2,
+                      }}
+                    >
+                      Criar lista
+                    </Button>
+                  </DisabledTooltip>
                 </CardContent>
               </Card>
             )

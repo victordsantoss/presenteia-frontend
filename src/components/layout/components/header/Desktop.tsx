@@ -3,13 +3,30 @@
 import { AppBar, Toolbar, Typography, Button, Container, Box, IconButton } from '@mui/material'
 import { Menu as MenuIcon, CardGiftcard as GiftIcon } from '@mui/icons-material'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { menuItems } from './items'
+import { DisabledTooltip } from '@/components/DisabledTooltip'
 
 interface HeaderProps {
   onMenuClick?: () => void
 }
 
 export function Header({ onMenuClick }: HeaderProps) {
+  const pathname = usePathname()
+  const isHome = pathname === '/'
+
+  const handleMenuClick = (e: React.MouseEvent, anchor?: string) => {
+    // Se estiver na home e tiver âncora, faz scroll suave
+    if (isHome && anchor) {
+      e.preventDefault()
+      const element = document.getElementById(anchor)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+    // Se não estiver na home, deixa o Next.js redirecionar para /#ancora
+  }
+
   return (
     <AppBar
       position="sticky"
@@ -88,7 +105,12 @@ export function Header({ onMenuClick }: HeaderProps) {
             }}
           >
             {menuItems.map((item) => (
-              <Link key={item.href} href={item.href} style={{ textDecoration: 'none' }}>
+              <Link 
+                key={item.href} 
+                href={item.href} 
+                style={{ textDecoration: 'none' }}
+                onClick={(e) => handleMenuClick(e, item.anchor)}
+              >
                 <Typography
                   sx={{
                     color: 'primary.contrastText',
@@ -111,19 +133,20 @@ export function Header({ onMenuClick }: HeaderProps) {
 
           {/* Login - Direita */}
           <Box>
-            <Button
-              component={Link}
-              href="/login"
-              variant="contained"
-              sx={{
-                bgcolor: 'primary.dark',
-                color: 'text.secondary',
-                fontWeight: 600,
-                textTransform: 'none',
-              }}
-            >
-              Entrar
-            </Button>
+            <DisabledTooltip title="Em breve!">
+              <Button
+                component="button"
+                variant="contained"
+                sx={{
+                  bgcolor: 'primary.dark',
+                  color: 'text.secondary',
+                  fontWeight: 600,
+                  textTransform: 'none',
+                }}
+              >
+                Entrar
+              </Button>
+            </DisabledTooltip>
           </Box>
         </Toolbar>
       </Container>
