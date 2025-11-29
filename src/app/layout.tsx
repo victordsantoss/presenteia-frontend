@@ -4,8 +4,8 @@ import '@/configs/styles/reset.css'
 import { AppProviders } from '@/providers/app-providers'
 
 export const metadata: Metadata = {
-  title: 'Presenteia',
-  description: 'O lugar perfeito para encontrar presentes especiais',
+  title: 'Presenteia - Presenteie quem você ama',
+  description: 'Transforme momentos especiais em presentes inesquecíveis.',
 }
 
 export default function RootLayout({

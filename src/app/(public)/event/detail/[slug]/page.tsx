@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { handleApiError } from '@/configs/api/ssr-fetch';
 import EventDetailPage from '@/modules/public/event/detail/page';
 import { Event } from '@/services/domain/event.types';
@@ -9,6 +10,17 @@ interface IPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateMetadata({ params }: IPageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const event = await getEventBySlug(resolvedParams.slug);
+  const eventData = handleApiError<Event.IGetEventResponse>(event);
+
+  return {
+    title: `Presenteia - ${eventData.title}`,
+    description: eventData.description || 'Transforme momentos especiais em presentes inesquecíveis.',
+  }
 }
 
 export default async function Page({ params }: IPageProps) {

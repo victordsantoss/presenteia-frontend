@@ -1,8 +1,9 @@
 'use client'
 
 import { ReactNode } from 'react'
-import { Box, Container } from '@mui/material'
+import { Box, useMediaQuery, useTheme } from '@mui/material'
 import { Header } from './components/header'
+import { HeaderMobile } from './components/header/HeaderMobile'
 import { Footer } from './components/footer'
 
 interface PublicLayoutProps {
@@ -10,6 +11,9 @@ interface PublicLayoutProps {
 }
 
 export function PublicLayout({ children }: PublicLayoutProps) {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
   return (
     <Box
       sx={{
@@ -18,7 +22,7 @@ export function PublicLayout({ children }: PublicLayoutProps) {
         minHeight: '100vh',
       }}
     >
-      <Header />
+      {isMobile ? <HeaderMobile /> : <Header />}
 
       <Box
         component="main"

@@ -17,8 +17,8 @@ interface IMetadataProviderProps {
 const MetadataContext = createContext<IMetadataContextData>({} as IMetadataContextData)
 
 export const MetadataProvider = ({ children }: IMetadataProviderProps) => {
-  const [title, setTitle] = useState('CDMOR')
-  const [description, setDescription] = useState('Igreja Assembléia de Deus Central da Fé - CDMOR')
+  const [title, setTitle] = useState('Presenteia')
+  const [description, setDescription] = useState('O lugar perfeito para encontrar presentes especiais')
 
   const updateTitle = useCallback((newTitle: string) => {
     setTitle(newTitle)

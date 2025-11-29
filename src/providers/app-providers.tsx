@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import defaultTheme from '@/configs/styles/theme/default-theme'
 import { QueryProvider } from './query-provider'
 import { PublicLayout } from '@/components/layout/Public'
+import { MetadataProvider } from '@/contexts/metadata.context'
 
 interface AppProvidersProps {
   children: React.ReactNode
@@ -15,7 +16,9 @@ export function AppProviders({ children }: AppProvidersProps) {
     <QueryProvider>
       <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
-        <PublicLayout>{children}</PublicLayout>
+        <MetadataProvider>
+          <PublicLayout>{children}</PublicLayout>
+        </MetadataProvider>
       </ThemeProvider>
     </QueryProvider>
   )
