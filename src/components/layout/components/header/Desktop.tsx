@@ -1,17 +1,13 @@
 'use client'
 
-import { AppBar, Toolbar, Typography, Button, Container, Box, IconButton } from '@mui/material'
-import { Menu as MenuIcon, CardGiftcard as GiftIcon } from '@mui/icons-material'
+import { AppBar, Toolbar, Typography, Button, Container, Box } from '@mui/material'
+import { CardGiftcard as GiftIcon } from '@mui/icons-material'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { menuItems } from './items'
 import { DisabledTooltip } from '@/components/DisabledTooltip'
 
-interface HeaderProps {
-  onMenuClick?: () => void
-}
-
-export function Header({ onMenuClick }: HeaderProps) {
+export function Header() {
   const pathname = usePathname()
   const isHome = pathname === '/'
 
@@ -105,9 +101,9 @@ export function Header({ onMenuClick }: HeaderProps) {
             }}
           >
             {menuItems.map((item) => (
-              <Link 
-                key={item.href} 
-                href={item.href} 
+              <Link
+                key={item.href}
+                href={item.href}
                 style={{ textDecoration: 'none' }}
                 onClick={(e) => handleMenuClick(e, item.anchor)}
               >

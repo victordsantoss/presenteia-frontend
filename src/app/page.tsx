@@ -1,7 +1,5 @@
 import HomePage from '@/modules/onboarding/home/page'
 
 export default function Page() {
-  return (
-    <HomePage />
-  )
+  return <HomePage />
 }

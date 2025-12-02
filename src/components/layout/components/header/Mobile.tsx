@@ -33,7 +33,7 @@ export function HeaderMobile() {
 
   const handleMenuClick = (e: React.MouseEvent, href: string, anchor?: string) => {
     setDrawerOpen(false)
-    
+
     // Se estiver na home e tiver âncora, faz scroll suave
     if (isHome && anchor) {
       e.preventDefault()
@@ -79,7 +79,6 @@ export function HeaderMobile() {
           >
             <MenuIcon sx={{ fontSize: 28 }} />
           </IconButton>
-
           {/* Logo - Centro */}
           <Link href="/" passHref style={{ textDecoration: 'none' }}>
             <Box
@@ -121,7 +120,6 @@ export function HeaderMobile() {
               </Box>
             </Box>
           </Link>
-
           {/* Botão Login - Direita (removido do mobile, fica só no drawer) */}
           <Box sx={{ width: 40 }} /> {/* Spacer para manter logo centralizada */}
         </Toolbar>
@@ -216,4 +214,3 @@ export function HeaderMobile() {
     </>
   )
 }
-

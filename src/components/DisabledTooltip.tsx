@@ -9,20 +9,16 @@ interface DisabledTooltipProps {
   placement?: TooltipProps['placement']
 }
 
-export function DisabledTooltip({ 
-  children, 
-  title, 
-  placement = 'top' 
-}: DisabledTooltipProps) {
+export function DisabledTooltip({ children, title, placement = 'top' }: DisabledTooltipProps) {
   // Clona o elemento filho e adiciona props de desabilitado
   const disabledChild = cloneElement(children, {
     disabled: true,
     sx: {
-      ...children.props.sx,
+      ...(children.props as { sx?: object }).sx,
       cursor: 'not-allowed',
       pointerEvents: 'auto', // Necessário para o tooltip funcionar
     },
-  })
+  } as Partial<typeof children.props>)
 
   return (
     <Tooltip
@@ -44,10 +40,7 @@ export function DisabledTooltip({
       }}
     >
       {/* Span wrapper necessário para tooltip funcionar com elemento desabilitado */}
-      <span style={{ display: 'inline-block' }}>
-        {disabledChild}
-      </span>
+      <span style={{ display: 'inline-block' }}>{disabledChild}</span>
     </Tooltip>
   )
 }
-

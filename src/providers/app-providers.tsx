@@ -23,4 +23,3 @@ export function AppProviders({ children }: AppProvidersProps) {
     </QueryProvider>
   )
 }
-

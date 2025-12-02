@@ -2,7 +2,6 @@
 
 import { Box, Typography, Button, Container } from '@mui/material'
 import { CardGiftcard as GiftIcon, Add as AddIcon } from '@mui/icons-material'
-import Link from 'next/link'
 import { DisabledTooltip } from '@/components/DisabledTooltip'
 
 export function GiftList() {

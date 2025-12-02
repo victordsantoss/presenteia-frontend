@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Container, Typography, Card, CardContent, Button } from '@mui/material'
+import { Box, Typography, Card, CardContent, Button } from '@mui/material'
 import {
   Celebration as CelebrationIcon,
   Cake as BirthdayIcon,
@@ -11,7 +11,6 @@ import {
   School as GraduationIcon,
   WorkspacePremium as AnniversaryIcon,
 } from '@mui/icons-material'
-import Link from 'next/link'
 import { DisabledTooltip } from '@/components/DisabledTooltip'
 
 const events = [

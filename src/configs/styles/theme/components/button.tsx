@@ -1,4 +1,4 @@
-import { ComponentsOverrides, Theme, alpha } from '@mui/material'
+import { ComponentsOverrides, Theme } from '@mui/material'
 import defaultTheme from '../default-theme'
 
 interface MyButtonOverrides {

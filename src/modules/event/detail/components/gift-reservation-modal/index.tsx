@@ -31,7 +31,12 @@ interface GiftReservationModalProps {
   onSuccess?: () => void
 }
 
-export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftReservationModalProps) {
+export function GiftReservationModal({
+  open,
+  onClose,
+  gift,
+  onSuccess,
+}: GiftReservationModalProps) {
   const [apiError, setApiError] = useState<string | null>(null)
 
   const methods = useForm<GiftReservationFormValues>({
@@ -144,7 +149,8 @@ export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftRes
                 {formatCurrency(gift.price)}
               </Typography>
               <Typography variant="caption" color="text.primary" sx={{ fontStyle: 'italic' }}>
-                Valor estimado com base em pesquisas realizadas. Este é apenas um valor de referência para compreensão do presente.
+                Valor estimado com base em pesquisas realizadas. Este é apenas um valor de
+                referência para compreensão do presente.
               </Typography>
             </Stack>
           </Box>
@@ -243,4 +249,3 @@ export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftRes
     </Dialog>
   )
 }
-

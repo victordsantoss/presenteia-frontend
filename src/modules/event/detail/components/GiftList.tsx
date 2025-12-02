@@ -23,8 +23,6 @@ import {
 import {
   CardGiftcard as GiftIcon,
   CheckCircle as CheckIcon,
-  LocalOffer as PriceIcon,
-  Inventory as QuantityIcon,
   TrendingUp as PriorityIcon,
   InfoOutlined as InfoIcon,
 } from '@mui/icons-material'
@@ -60,11 +58,11 @@ export function GiftList({ eventId, categories }: GiftListProps) {
   })
 
   const { mutate: fetchGifts, isPending } = useMutation({
-    mutationFn: (payload?: Partial<Gift.IGetGiftListRequest>) => 
-      GiftService.getGiftList(eventId, { 
+    mutationFn: (payload?: Partial<Gift.IGetGiftListRequest>) =>
+      GiftService.getGiftList(eventId, {
         limit: 100, // Limite alto inicialmente, como solicitado
         page: 1,
-        ...payload 
+        ...payload,
       }),
     onError: (err) => {
       if (isAxiosError(err)) {
@@ -90,15 +88,11 @@ export function GiftList({ eventId, categories }: GiftListProps) {
       status: filters.status !== GiftAvailabilityStatus.ALL ? filters.status : undefined,
     }
     fetchGifts(payload)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, selectedTab])
 
-  const handleTabChange = useCallback(
-    (_event: React.SyntheticEvent, newValue: number) => {
-      setSelectedTab(newValue)
-    },
-    []
-  )
+  const handleTabChange = useCallback((_event: React.SyntheticEvent, newValue: number) => {
+    setSelectedTab(newValue)
+  }, [])
 
   const handleFilterChange = useCallback(
     (newFilters: { search: string; status: GiftAvailabilityStatus }) => {
@@ -282,8 +276,6 @@ export function GiftList({ eventId, categories }: GiftListProps) {
             }}
           >
             {gifts?.map((gift) => {
-              const progressPercentage = gift.price > 0 ? (gift.totalContributed / gift.price) * 100 : 0
-
               return (
                 <Box key={gift.id}>
                   <Card
@@ -387,7 +379,7 @@ export function GiftList({ eventId, categories }: GiftListProps) {
                           <Typography variant="body2" fontWeight={600}>
                             Preço médio: {formatCurrency(gift.price)}
                           </Typography>
-                          <Tooltip 
+                          <Tooltip
                             title="Valor estimado com base em pesquisas realizadas. Este é apenas um valor de referência para compreensão do presente."
                             arrow
                             placement="top"
@@ -404,12 +396,12 @@ export function GiftList({ eventId, categories }: GiftListProps) {
                               },
                             }}
                           >
-                            <IconButton 
-                              size="small" 
-                              sx={{ 
-                                p: 0, 
+                            <IconButton
+                              size="small"
+                              sx={{
+                                p: 0,
                                 ml: 0.5,
-                                '&:hover': { bgcolor: 'transparent' } 
+                                '&:hover': { bgcolor: 'transparent' },
                               }}
                             >
                               <InfoIcon sx={{ fontSize: 16, color: 'info.main' }} />
@@ -417,7 +409,7 @@ export function GiftList({ eventId, categories }: GiftListProps) {
                           </Tooltip>
                         </Box>
                       </Stack>
-                    
+
                       {/* Botão */}
                       <Button
                         variant={gift.isAvailable ? 'contained' : 'outlined'}
@@ -469,4 +461,3 @@ export function GiftList({ eventId, categories }: GiftListProps) {
     </Box>
   )
 }
-

@@ -15,10 +15,7 @@ import { Search as SearchIcon } from '@mui/icons-material'
 import { GiftAvailabilityStatus } from '@/services/domain/gift.types'
 
 interface GiftFilterListProps {
-  onFilterChange: (filters: {
-    search: string
-    status: GiftAvailabilityStatus
-  }) => void
+  onFilterChange: (filters: { search: string; status: GiftAvailabilityStatus }) => void
 }
 
 export function GiftFilterList({ onFilterChange }: GiftFilterListProps) {
@@ -94,4 +91,3 @@ export function GiftFilterList({ onFilterChange }: GiftFilterListProps) {
     </Box>
   )
 }
-

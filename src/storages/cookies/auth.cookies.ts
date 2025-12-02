@@ -1,4 +1,4 @@
-import { setCookie, getCookie, deleteCookie } from 'cookies-next';
+import { setCookie, getCookie, deleteCookie } from 'cookies-next'
 
 export const AuthCookie = {
   name: 'AUTH_TOKEN',
@@ -8,15 +8,15 @@ export const AuthCookie = {
       path: '/',
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-    });
+    })
   },
 
   getToken(): string | null {
-    const value = getCookie(this.name);
-    return typeof value === 'string' ? value : null;
+    const value = getCookie(this.name)
+    return typeof value === 'string' ? value : null
   },
 
   removeToken() {
-    deleteCookie(this.name);
+    deleteCookie(this.name)
   },
-};
+}

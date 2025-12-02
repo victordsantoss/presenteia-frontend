@@ -1,20 +1,20 @@
-'use client';
+'use client'
 
-import { Box, Typography, Button, Stack } from '@mui/material';
-import Link from 'next/link';
-import { useEffect } from 'react';
-import Image from 'next/image';
+import { Box, Typography, Button, Stack } from '@mui/material'
+import Link from 'next/link'
+import { useEffect } from 'react'
+import Image from 'next/image'
 
 export default function ErrorPage({
   error,
   reset,
 }: {
-  error: Error & { digest?: string };
-  reset: () => void;
+  error: Error & { digest?: string }
+  reset: () => void
 }) {
   useEffect(() => {
-    console.error(error);
-  }, [error]);
+    console.error(error)
+  }, [error])
 
   return (
     <Box
@@ -48,5 +48,5 @@ export default function ErrorPage({
         </Button>
       </Stack>
     </Box>
-  );
+  )
 }

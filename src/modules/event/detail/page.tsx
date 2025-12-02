@@ -11,7 +11,7 @@ interface EventDetailPageProps {
 
 export default function EventDetailPage({ data, categories }: EventDetailPageProps) {
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+    <Box sx={{ minHeight: '100vh', bgcolor: 'background.paper' }}>
       <Header data={data} />
       <GiftList eventId={data.id} categories={categories} />
     </Box>

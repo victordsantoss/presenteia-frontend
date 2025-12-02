@@ -28,7 +28,7 @@ export const apiFetch = async <T, Q extends QueryParams = QueryParams>(
     ...options.headers,
   }
 
-  console.log(`[API Request] ${options.method || 'GET'} ${url.toString()}`)
+  console.warn(`[API Request] ${options.method || 'GET'} ${url.toString()}`)
 
   const response = await fetch(url.toString(), {
     headers,
@@ -38,7 +38,7 @@ export const apiFetch = async <T, Q extends QueryParams = QueryParams>(
 
   let data
   const contentType = response.headers.get('content-type')
-  
+
   if (contentType?.includes('application/json')) {
     try {
       data = await response.json()

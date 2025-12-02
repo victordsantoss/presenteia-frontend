@@ -35,10 +35,10 @@ export default function NotFound() {
         />
       </Box>
 
-      <Typography 
-        variant="h3" 
+      <Typography
+        variant="h3"
         component="h1"
-        gutterBottom 
+        gutterBottom
         textAlign="center"
         fontWeight="bold"
         color="text.primary"
@@ -46,33 +46,24 @@ export default function NotFound() {
         Página não encontrada
       </Typography>
 
-      <Typography 
-        variant="body1" 
-        color="text.secondary" 
-        textAlign="center" 
+      <Typography
+        variant="body1"
+        color="text.secondary"
+        textAlign="center"
         mb={4}
         sx={{ maxWidth: 500 }}
       >
-        Ops! Parece que essa página não existe ou foi movida. Mas não se preocupe, 
-        temos muitas outras coisas incríveis para você descobrir!
+        Ops! Parece que essa página não existe ou foi movida. Mas não se preocupe, temos muitas
+        outras coisas incríveis para você descobrir!
       </Typography>
 
       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-        <Button 
-          component={Link} 
-          href="/" 
-          variant="contained"
-          size="large"
-          startIcon={<HomeIcon />}
-        >
+        <Button component={Link} href="/" variant="contained" size="large" startIcon={<HomeIcon />}>
           Voltar para Home
         </Button>
       </Stack>
 
-      <Box sx={{ mt: 6, opacity: 0.3, fontSize: '3rem' }}>
-        🎁 🎉 🎈
-      </Box>
+      <Box sx={{ mt: 6, opacity: 0.3, fontSize: '3rem' }}>🎁 🎉 🎈</Box>
     </Box>
   )
 }
-

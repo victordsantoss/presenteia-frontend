@@ -18,7 +18,9 @@ const MetadataContext = createContext<IMetadataContextData>({} as IMetadataConte
 
 export const MetadataProvider = ({ children }: IMetadataProviderProps) => {
   const [title, setTitle] = useState('Presenteia')
-  const [description, setDescription] = useState('O lugar perfeito para encontrar presentes especiais')
+  const [description, setDescription] = useState(
+    'O lugar perfeito para encontrar presentes especiais'
+  )
 
   const updateTitle = useCallback((newTitle: string) => {
     setTitle(newTitle)
