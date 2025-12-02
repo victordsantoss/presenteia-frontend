@@ -1,6 +1,18 @@
 'use client'
 
-import { Box, Container, Typography, Button, Stack, Chip, Card, CardContent } from '@mui/material'
+import { useState } from 'react'
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Stack,
+  Chip,
+  Card,
+  CardContent,
+  Snackbar,
+  Alert,
+} from '@mui/material'
 import {
   CalendarToday as CalendarIcon,
   LocationOn as LocationIcon,
@@ -8,9 +20,11 @@ import {
   Share as ShareIcon,
   Public as PublicIcon,
   Lock as LockIcon,
+  ContentCopy as CopyIcon,
 } from '@mui/icons-material'
 import { Event } from '@/services/domain/event.types'
 import { formatDateAndTime } from '@/common/utils/date.util'
+import { DisabledTooltip } from '@/components/DisabledTooltip'
 
 interface HeaderProps {
   data: Event.IGetEventResponse
@@ -18,6 +32,17 @@ interface HeaderProps {
 
 export function Header({ data }: HeaderProps) {
   const isPublic = data.visibility === 'public'
+  const [showCopiedMessage, setShowCopiedMessage] = useState(false)
+
+  const handleShare = async () => {
+    const url = window.location.href
+    try {
+      await navigator.clipboard.writeText(url)
+      setShowCopiedMessage(true)
+    } catch {
+      console.error('Falha ao copiar link')
+    }
+  }
 
   return (
     <Box
@@ -110,6 +135,9 @@ export function Header({ data }: HeaderProps) {
                   sx={{
                     width: 48,
                     height: 48,
+                    minWidth: 48,
+                    minHeight: 48,
+                    flexShrink: 0,
                     borderRadius: 2,
                     bgcolor: 'rgba(255, 255, 255, 0.2)',
                     display: 'flex',
@@ -117,7 +145,7 @@ export function Header({ data }: HeaderProps) {
                     justifyContent: 'center',
                   }}
                 >
-                  <CalendarIcon sx={{ fontSize: 28, color: 'white' }} />
+                  <CalendarIcon sx={{ fontSize: 28, width: 28, height: 28, color: 'white' }} />
                 </Box>
                 <Box>
                   <Typography
@@ -139,7 +167,6 @@ export function Header({ data }: HeaderProps) {
                       fontSize: '1rem',
                     }}
                   >
-                    {console.log(data.eventDate)}
                     {formatDateAndTime(new Date(data.eventDate))}
                   </Typography>
                 </Box>
@@ -164,6 +191,9 @@ export function Header({ data }: HeaderProps) {
                   sx={{
                     width: 48,
                     height: 48,
+                    minWidth: 48,
+                    minHeight: 48,
+                    flexShrink: 0,
                     borderRadius: 2,
                     bgcolor: 'rgba(255, 255, 255, 0.2)',
                     display: 'flex',
@@ -171,7 +201,7 @@ export function Header({ data }: HeaderProps) {
                     justifyContent: 'center',
                   }}
                 >
-                  <LocationIcon sx={{ fontSize: 28, color: 'white' }} />
+                  <LocationIcon sx={{ fontSize: 28, width: 28, height: 28, color: 'white' }} />
                 </Box>
                 <Box>
                   <Typography
@@ -203,36 +233,35 @@ export function Header({ data }: HeaderProps) {
 
         {/* Botões de Ação */}
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ maxWidth: '600px' }}>
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<CheckIcon />}
-            color="secondary"
-            sx={{
-              bgcolor: 'white',
-              color: 'secondary.dark',
-              px: 4,
-              py: 1.5,
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              textTransform: 'none',
-              borderRadius: 2,
-              boxShadow: 3,
-              '&:hover': {
-                bgcolor: 'rgba(255, 255, 255, 0.9)',
-                boxShadow: 6,
-                transform: 'translateY(-2px)',
-              },
-            }}
-          >
-            Confirmar Presença
-          </Button>
+          {/* <DisabledTooltip title="Em breve!"> */}
+            <Button
+              variant="contained"
+              size="large"
+              // fullWidth
+              startIcon={<CheckIcon />}
+              color="secondary"
+              sx={{
+                bgcolor: 'white',
+                color: 'secondary.dark',
+                px: 4,
+                py: 1.5,
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                textTransform: 'none',
+                borderRadius: 2,
+                boxShadow: 3,
+              }}
+            >
+              Confirmar Presença
+            </Button>
+          {/* </DisabledTooltip> */}
 
           <Button
             variant="outlined"
             size="large"
-            startIcon={<ShareIcon />}
+            startIcon={ <ShareIcon />}
             color="secondary"
+            onClick={handleShare}
             sx={{
               bgcolor: 'secondary.dark',
               borderColor: 'white',
@@ -244,6 +273,7 @@ export function Header({ data }: HeaderProps) {
               fontWeight: 600,
               textTransform: 'none',
               borderRadius: 2,
+              transition: 'all 0.2s ease',
               '&:hover': {
                 borderWidth: 2,
                 borderColor: 'white',
@@ -256,6 +286,22 @@ export function Header({ data }: HeaderProps) {
           </Button>
         </Stack>
       </Container>
+
+      <Snackbar
+        open={showCopiedMessage}
+        autoHideDuration={3000}
+        onClose={() => setShowCopiedMessage(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setShowCopiedMessage(false)}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          Link copiado para a área de transferência!
+        </Alert>
+      </Snackbar>
     </Box>
   )
 }

@@ -97,11 +97,13 @@ export function GiftReservationModal({
     <Dialog
       open={open}
       onClose={isPending ? undefined : handleClose}
-      maxWidth="sm"
       fullWidth
       PaperProps={{
         sx: {
           borderRadius: 3,
+          width: { xs: '95%', sm: '90%' },
+          maxWidth: { xs: '95%', sm: 600 },
+          m: { xs: 1, sm: 4 },
         },
       }}
     >
@@ -215,13 +217,14 @@ export function GiftReservationModal({
           <GiftReservationForm methods={methods} isPending={isPending} />
         </DialogContent>
 
-        <DialogActions sx={{ px: 3, pb: 3, gap: 1 }}>
+        <DialogActions sx={{ px: 3, pb: 3, gap: 1, flexDirection: { xs: 'column', md: 'row' } }} >
           <Button
             onClick={handleClose}
             disabled={isPending}
             variant="outlined"
             size="large"
             color="secondary"
+            fullWidth
             sx={{
               textTransform: 'none',
               fontWeight: 600,
@@ -234,6 +237,7 @@ export function GiftReservationModal({
             disabled={isPending}
             variant="contained"
             color="primary"
+            fullWidth
             size="large"
             startIcon={isPending ? <CircularProgress size={20} color="inherit" /> : null}
             sx={{

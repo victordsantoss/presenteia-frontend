@@ -18,7 +18,7 @@ import {
 } from '@mui/material'
 import { ArrowBack as BackIcon, Save as SaveIcon } from '@mui/icons-material'
 import Link from 'next/link'
-import { GiftForm } from './components'
+import { GiftForm } from './components/GiftForm'
 import { CreateGiftSchema, type CreateGiftFormValues } from './form.schema'
 import { GiftService } from '@/services/client/gift.service'
 import { CategoryService } from '@/services/client/category.service'
