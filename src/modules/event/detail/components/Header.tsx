@@ -77,16 +77,18 @@ export function Header({ data }: HeaderProps) {
 
           <Typography
             variant="h6"
+            component="div"
             sx={{
               fontWeight: 400,
               fontSize: { xs: '1rem', md: '1.25rem' },
               opacity: 0.95,
               lineHeight: 1.6,
               maxWidth: '800px',
+              '& p': { m: 0 },
+              '& a': { color: 'inherit', textDecoration: 'underline' },
             }}
-          >
-            {data.description}
-          </Typography>
+            dangerouslySetInnerHTML={{ __html: data.description }}
+          />
         </Box>
 
         {/* Cards de Informação */}
@@ -137,6 +139,7 @@ export function Header({ data }: HeaderProps) {
                       fontSize: '1rem',
                     }}
                   >
+                    {console.log(data.eventDate)}
                     {formatDateAndTime(new Date(data.eventDate))}
                   </Typography>
                 </Box>

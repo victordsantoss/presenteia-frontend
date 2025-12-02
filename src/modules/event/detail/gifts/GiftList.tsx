@@ -258,9 +258,9 @@ export function GiftList({ eventId, categories }: GiftListProps) {
               py: 8,
             }}
           >
-            <GiftIcon sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
+            <GiftIcon sx={{ fontSize: 60, color: 'text.secondary', mb: 2 }} />
             <Typography variant="h6" color="text.primary">
-              Nenhum presente encontrado nesta categoria
+              Em breve!
             </Typography>
           </Box>
         ) : (
