@@ -1,32 +1,28 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Button,
-  TextField,
   Box,
   Typography,
   Stack,
-  InputAdornment,
   Alert,
   CircularProgress,
 } from '@mui/material'
-import {
-  Person as PersonIcon,
-  Email as EmailIcon,
-  Phone as PhoneIcon,
-  Message as MessageIcon,
-  Link as LinkIcon,
-} from '@mui/icons-material'
+import { Link as LinkIcon } from '@mui/icons-material'
 import { useMutation } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Gift } from '@/services/domain/gift.types'
 import { GiftService } from '@/services/client/gift.service'
 import { formatCurrency } from '@/common/utils/format'
+import { GiftReservationSchema, type GiftReservationFormValues } from './form.schema'
+import { GiftReservationForm } from './Form'
 
 interface GiftReservationModalProps {
   open: boolean
@@ -36,14 +32,18 @@ interface GiftReservationModalProps {
 }
 
 export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftReservationModalProps) {
-  const [formData, setFormData] = useState({
-    guestName: '',
-    guestEmail: '',
-    guestPhone: '',
-    message: '',
-  })
-  const [errors, setErrors] = useState<Record<string, string>>({})
   const [apiError, setApiError] = useState<string | null>(null)
+
+  const methods = useForm<GiftReservationFormValues>({
+    resolver: zodResolver(GiftReservationSchema),
+    defaultValues: {
+      guestName: '',
+      guestEmail: '',
+      guestPhone: '',
+      message: '',
+    },
+    mode: 'onBlur',
+  })
 
   const { mutate: reserveGift, isPending } = useMutation({
     mutationFn: (payload: Gift.IReserveGiftRequest) => GiftService.reserveGift(gift!.id, payload),
@@ -62,52 +62,29 @@ export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftRes
   })
 
   const handleClose = () => {
-    setFormData({
-      guestName: '',
-      guestEmail: '',
-      guestPhone: '',
-      message: '',
-    })
-    setErrors({})
+    methods.reset()
     setApiError(null)
     onClose()
   }
 
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {}
-
-    if (!formData.guestName.trim()) {
-      newErrors.guestName = 'Nome é obrigatório'
-    }
-
-    if (!formData.guestEmail.trim()) {
-      newErrors.guestEmail = 'Email é obrigatório'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.guestEmail)) {
-      newErrors.guestEmail = 'Email inválido'
-    }
-
-    if (!formData.guestPhone.trim()) {
-      newErrors.guestPhone = 'Telefone é obrigatório'
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = (values: GiftReservationFormValues) => {
     setApiError(null)
 
-    if (!validateForm()) return
-
     reserveGift({
-      guestName: formData.guestName,
-      guestEmail: formData.guestEmail,
-      guestPhone: formData.guestPhone,
+      guestName: values.guestName,
+      guestEmail: values.guestEmail,
+      guestPhone: values.guestPhone,
       contributionAmount: gift?.price || 0,
-      message: formData.message,
+      message: values.message || '',
     })
   }
+
+  useEffect(() => {
+    if (open) {
+      methods.reset()
+      setApiError(null)
+    }
+  }, [open, methods])
 
   if (!gift) return null
 
@@ -140,7 +117,7 @@ export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftRes
         </Box>
       </DialogTitle>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={methods.handleSubmit(handleSubmit)}>
         <DialogContent sx={{ pt: 3 }}>
           {apiError && (
             <Alert severity="error" sx={{ mb: 3 }}>
@@ -229,78 +206,7 @@ export function GiftReservationModal({ open, onClose, gift, onSuccess }: GiftRes
             </Box>
           )}
 
-          <Stack spacing={2.5}>
-            {/* Nome */}
-            <TextField
-              fullWidth
-              label="Seu Nome"
-              required
-              value={formData.guestName}
-              onChange={(e) => setFormData({ ...formData, guestName: e.target.value })}
-              error={!!errors.guestName}
-              helperText={errors.guestName}
-              disabled={isPending}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PersonIcon color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            {/* Email */}
-            <TextField
-              fullWidth
-              label="Seu Email"
-              type="email"
-              required
-              value={formData.guestEmail}
-              onChange={(e) => setFormData({ ...formData, guestEmail: e.target.value })}
-              error={!!errors.guestEmail}
-              helperText={errors.guestEmail}
-              disabled={isPending}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <EmailIcon color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            {/* Telefone */}
-            <TextField
-              fullWidth
-              label="Seu Telefone"
-              required
-              value={formData.guestPhone}
-              onChange={(e) => setFormData({ ...formData, guestPhone: e.target.value })}
-              error={!!errors.guestPhone}
-              helperText={errors.guestPhone}
-              disabled={isPending}
-              placeholder="(11) 98765-4321"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PhoneIcon color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            {/* Mensagem */}
-            <TextField
-              fullWidth
-              label="Mensagem (opcional)"
-              multiline
-              rows={3}
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              disabled={isPending}
-              placeholder="Deixe uma mensagem carinhosa..."
-            />
-          </Stack>
+          <GiftReservationForm methods={methods} isPending={isPending} />
         </DialogContent>
 
         <DialogActions sx={{ px: 3, pb: 3, gap: 1 }}>

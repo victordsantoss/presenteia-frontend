@@ -33,7 +33,7 @@ import { isAxiosError } from 'axios'
 import { Gift, GiftAvailabilityStatus } from '@/services/domain/gift.types'
 import { formatCurrency } from '@/common/utils/format'
 import { GiftService } from '@/services/client/gift.service'
-import { GiftReservationModal } from './GiftReservationModal'
+import { GiftReservationModal } from './gift-reservation-modal'
 import { GiftFilterList } from './GiftFilterList'
 
 interface GiftListProps {

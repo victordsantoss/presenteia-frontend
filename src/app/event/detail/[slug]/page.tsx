@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { handleApiError } from '@/configs/api/ssr-fetch';
-import EventDetailPage from '@/modules/public/event/detail/page';
+import EventDetailPage from '@/modules/event/detail/page';
 import { Event } from '@/services/domain/event.types';
 import { Gift } from '@/services/domain/gift.types';
 import { getEventBySlug } from '@/services/server/event.service';
