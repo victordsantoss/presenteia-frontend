@@ -22,6 +22,8 @@ export namespace Gift {
     categoryId?: string
     status?: GiftAvailabilityStatus
     search?: string
+    orderBy?: 'price'
+    sortBy?: 'ASC' | 'DESC'
   }
 
   export type IGiftItem = {

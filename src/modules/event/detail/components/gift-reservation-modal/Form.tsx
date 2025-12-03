@@ -64,7 +64,6 @@ export function GiftReservationForm({ methods, isPending }: GiftReservationFormP
             fullWidth
             label="Seu Email"
             type="email"
-            required
             placeholder="exemplo@email.com"
             error={!!fieldState.error}
             helperText={fieldState.error?.message}
@@ -96,7 +95,6 @@ export function GiftReservationForm({ methods, isPending }: GiftReservationFormP
             {...field}
             fullWidth
             label="Seu Telefone"
-            required
             placeholder="(11) 98765-4321"
             error={!!fieldState.error}
             helperText={fieldState.error?.message}
@@ -127,7 +125,7 @@ export function GiftReservationForm({ methods, isPending }: GiftReservationFormP
           <TextField
             {...field}
             fullWidth
-            label="Mensagem (opcional)"
+            label="Mensagem"
             multiline
             rows={3}
             placeholder="Deixe uma mensagem carinhosa..."

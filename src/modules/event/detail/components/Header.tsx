@@ -20,11 +20,9 @@ import {
   Share as ShareIcon,
   Public as PublicIcon,
   Lock as LockIcon,
-  ContentCopy as CopyIcon,
 } from '@mui/icons-material'
 import { Event } from '@/services/domain/event.types'
 import { formatDateAndTime } from '@/common/utils/date.util'
-import { DisabledTooltip } from '@/components/DisabledTooltip'
 
 interface HeaderProps {
   data: Event.IGetEventResponse
@@ -234,32 +232,32 @@ export function Header({ data }: HeaderProps) {
         {/* Botões de Ação */}
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ maxWidth: '600px' }}>
           {/* <DisabledTooltip title="Em breve!"> */}
-            <Button
-              variant="contained"
-              size="large"
-              // fullWidth
-              startIcon={<CheckIcon />}
-              color="secondary"
-              sx={{
-                bgcolor: 'white',
-                color: 'secondary.dark',
-                px: 4,
-                py: 1.5,
-                fontSize: '1.1rem',
-                fontWeight: 600,
-                textTransform: 'none',
-                borderRadius: 2,
-                boxShadow: 3,
-              }}
-            >
-              Confirmar Presença
-            </Button>
+          <Button
+            variant="contained"
+            size="large"
+            // fullWidth
+            startIcon={<CheckIcon />}
+            color="secondary"
+            sx={{
+              bgcolor: 'white',
+              color: 'secondary.dark',
+              px: 4,
+              py: 1.5,
+              fontSize: '1.1rem',
+              fontWeight: 600,
+              textTransform: 'none',
+              borderRadius: 2,
+              boxShadow: 3,
+            }}
+          >
+            Confirmar Presença
+          </Button>
           {/* </DisabledTooltip> */}
 
           <Button
             variant="outlined"
             size="large"
-            startIcon={ <ShareIcon />}
+            startIcon={<ShareIcon />}
             color="secondary"
             onClick={handleShare}
             sx={{

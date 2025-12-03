@@ -77,8 +77,8 @@ export function GiftReservationModal({
 
     reserveGift({
       guestName: values.guestName,
-      guestEmail: values.guestEmail,
-      guestPhone: values.guestPhone,
+      guestEmail: values.guestEmail || '',
+      guestPhone: values.guestPhone || '',
       contributionAmount: gift?.price || 0,
       message: values.message || '',
     })
@@ -217,7 +217,7 @@ export function GiftReservationModal({
           <GiftReservationForm methods={methods} isPending={isPending} />
         </DialogContent>
 
-        <DialogActions sx={{ px: 3, pb: 3, gap: 1, flexDirection: { xs: 'column', md: 'row' } }} >
+        <DialogActions sx={{ px: 3, pb: 3, gap: 1, flexDirection: { xs: 'column', md: 'row' } }}>
           <Button
             onClick={handleClose}
             disabled={isPending}

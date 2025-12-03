@@ -12,7 +12,7 @@ export interface IPaginatedRequest {
   limit: number
   page: number
   orderBy?: string
-  sortBy?: 'asc' | 'desc'
+  sortBy?: 'ASC' | 'DESC'
   search?: string
   [key: string]: unknown
 }

@@ -12,6 +12,3 @@ export interface IGetCategoriesResponse {
     totalPages: number
   }
 }
-
-
-

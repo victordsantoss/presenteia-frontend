@@ -29,7 +29,7 @@ export const CreateGiftSchema = z.object({
     .optional()
     .or(z.nan())
     .transform((val) => (isNaN(val as number) ? undefined : val)),
-  categoryId: z.string().optional().or(z.literal('')),
+  categoryId: z.string().min(1, { message: 'A categoria é obrigatória' }),
   priority: z.nativeEnum(GiftPriority).optional(),
   allowMultipleContributions: z.boolean().default(false),
   links: z

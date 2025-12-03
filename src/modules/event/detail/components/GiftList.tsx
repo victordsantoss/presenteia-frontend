@@ -32,7 +32,7 @@ import { Gift, GiftAvailabilityStatus } from '@/services/domain/gift.types'
 import { formatCurrency } from '@/common/utils/format'
 import { GiftService } from '@/services/client/gift.service'
 import { GiftReservationModal } from './gift-reservation-modal'
-import { GiftFilterList } from './GiftFilterList'
+import { GiftFilterList, OrderBy } from './GiftFilterList'
 
 interface GiftListProps {
   eventId: string
@@ -52,9 +52,11 @@ export function GiftList({ eventId, categories }: GiftListProps) {
   const [filters, setFilters] = useState<{
     search: string
     status: GiftAvailabilityStatus
+    orderBy: OrderBy
   }>({
     search: '',
     status: GiftAvailabilityStatus.ALL,
+    orderBy: 'none',
   })
 
   const { mutate: fetchGifts, isPending } = useMutation({
@@ -82,10 +84,22 @@ export function GiftList({ eventId, categories }: GiftListProps) {
   // Busca presentes quando filtros ou categoria mudam
   useEffect(() => {
     const categoryId = selectedTab === 0 ? undefined : categories[selectedTab - 1]?.id
+    const getOrderByParams = () => {
+      if (filters.orderBy === 'price_desc')
+        return { orderBy: 'price' as const, sortBy: 'DESC' as const }
+      if (filters.orderBy === 'price_asc')
+        return { orderBy: 'price' as const, sortBy: 'ASC' as const }
+      return { orderBy: undefined, sortBy: undefined }
+    }
+
+    const { orderBy, sortBy } = getOrderByParams()
+
     const payload = {
       categoryId,
       search: filters.search || undefined,
       status: filters.status !== GiftAvailabilityStatus.ALL ? filters.status : undefined,
+      orderBy,
+      sortBy,
     }
     fetchGifts(payload)
   }, [filters, selectedTab])
@@ -95,7 +109,7 @@ export function GiftList({ eventId, categories }: GiftListProps) {
   }, [])
 
   const handleFilterChange = useCallback(
-    (newFilters: { search: string; status: GiftAvailabilityStatus }) => {
+    (newFilters: { search: string; status: GiftAvailabilityStatus; orderBy: OrderBy }) => {
       setFilters(newFilters)
     },
     []
@@ -314,9 +328,10 @@ export function GiftList({ eventId, categories }: GiftListProps) {
                           target.src = '/images/Image-not-found.png'
                         }}
                         sx={{
+                          backgroundColor: 'white',
                           width: '100%',
                           height: '100%',
-                          objectFit: 'cover',
+                          objectFit: 'contain',
                           objectPosition: 'center',
                         }}
                       />
