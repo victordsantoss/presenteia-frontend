@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
@@ -154,24 +154,26 @@ export default function CreateGiftPage({ eventId, eventSlug, eventTitle }: Creat
             <CircularProgress />
           </Box>
         ) : (
-          <form onSubmit={handleSubmit}>
-            <GiftForm methods={methods} categories={categories} isPending={isPending} />
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit}>
+              <GiftForm methods={methods} categories={categories} isPending={isPending} />
 
-            <Box display="flex" gap={2} mt={4} justifyContent="flex-end">
-              <Button variant="outlined" onClick={handleCancel} disabled={isPending} size="large">
-                Cancelar
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                disabled={isPending}
-                startIcon={isPending ? <CircularProgress size={20} /> : <SaveIcon />}
-                size="large"
-              >
-                {isPending ? 'Salvando...' : 'Salvar Presente'}
-              </Button>
-            </Box>
-          </form>
+              <Box display="flex" gap={2} mt={4} justifyContent="flex-end">
+                <Button variant="outlined" onClick={handleCancel} disabled={isPending} size="large">
+                  Cancelar
+                </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={isPending}
+                  startIcon={isPending ? <CircularProgress size={20} /> : <SaveIcon />}
+                  size="large"
+                >
+                  {isPending ? 'Salvando...' : 'Salvar Presente'}
+                </Button>
+              </Box>
+            </form>
+          </FormProvider>
         )}
       </Paper>
     </Container>
