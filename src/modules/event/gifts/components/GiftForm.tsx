@@ -166,7 +166,7 @@ export function GiftForm({ methods, categories, isPending }: GiftFormProps) {
           name="categoryId"
           control={control}
           render={({ field }) => (
-            <FormControl fullWidth error={!!errors.categoryId} disabled={isPending} required>
+            <FormControl fullWidth error={!!errors.categoryId} disabled={isPending}>
               <InputLabel>Categoria</InputLabel>
               <Select
                 {...field}
@@ -178,6 +178,9 @@ export function GiftForm({ methods, categories, isPending }: GiftFormProps) {
                   </InputAdornment>
                 }
               >
+                <MenuItem value="">
+                  <em>Nenhuma</em>
+                </MenuItem>
                 {categories.map((category) => (
                   <MenuItem key={category.id} value={category.id}>
                     {category.name}

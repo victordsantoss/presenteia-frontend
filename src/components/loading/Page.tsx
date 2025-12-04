@@ -16,9 +16,6 @@ export default function PageLoadingComponent() {
       }}
     >
       <CircularProgress sx={{ color: 'secondary.main' }} size={120} />
-      <Typography variant="h6" color="text.primary">
-        Carregando...
-      </Typography>
     </Box>
   )
 }

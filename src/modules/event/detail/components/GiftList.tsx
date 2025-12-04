@@ -23,6 +23,8 @@ import {
 import {
   CardGiftcard as GiftIcon,
   CheckCircle as CheckIcon,
+  LocalOffer as PriceIcon,
+  Inventory as QuantityIcon,
   TrendingUp as PriorityIcon,
   InfoOutlined as InfoIcon,
 } from '@mui/icons-material'
@@ -31,8 +33,8 @@ import { isAxiosError } from 'axios'
 import { Gift, GiftAvailabilityStatus } from '@/services/domain/gift.types'
 import { formatCurrency } from '@/common/utils/format'
 import { GiftService } from '@/services/client/gift.service'
-import { GiftReservationModal } from './gift-reservation-modal'
-import { GiftFilterList, OrderBy } from './GiftFilterList'
+import { GiftReservationModal } from './GiftReservationModal'
+import { GiftFilterList } from './GiftFilterList'
 
 interface GiftListProps {
   eventId: string
@@ -52,19 +54,17 @@ export function GiftList({ eventId, categories }: GiftListProps) {
   const [filters, setFilters] = useState<{
     search: string
     status: GiftAvailabilityStatus
-    orderBy: OrderBy
   }>({
     search: '',
     status: GiftAvailabilityStatus.ALL,
-    orderBy: 'none',
   })
 
   const { mutate: fetchGifts, isPending } = useMutation({
-    mutationFn: (payload?: Partial<Gift.IGetGiftListRequest>) =>
-      GiftService.getGiftList(eventId, {
+    mutationFn: (payload?: Partial<Gift.IGetGiftListRequest>) => 
+      GiftService.getGiftList(eventId, { 
         limit: 100, // Limite alto inicialmente, como solicitado
         page: 1,
-        ...payload,
+        ...payload 
       }),
     onError: (err) => {
       if (isAxiosError(err)) {
@@ -84,32 +84,24 @@ export function GiftList({ eventId, categories }: GiftListProps) {
   // Busca presentes quando filtros ou categoria mudam
   useEffect(() => {
     const categoryId = selectedTab === 0 ? undefined : categories[selectedTab - 1]?.id
-    const getOrderByParams = () => {
-      if (filters.orderBy === 'price_desc')
-        return { orderBy: 'price' as const, sortBy: 'DESC' as const }
-      if (filters.orderBy === 'price_asc')
-        return { orderBy: 'price' as const, sortBy: 'ASC' as const }
-      return { orderBy: undefined, sortBy: undefined }
-    }
-
-    const { orderBy, sortBy } = getOrderByParams()
-
     const payload = {
       categoryId,
       search: filters.search || undefined,
       status: filters.status !== GiftAvailabilityStatus.ALL ? filters.status : undefined,
-      orderBy,
-      sortBy,
     }
     fetchGifts(payload)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, selectedTab])
 
-  const handleTabChange = useCallback((_event: React.SyntheticEvent, newValue: number) => {
-    setSelectedTab(newValue)
-  }, [])
+  const handleTabChange = useCallback(
+    (_event: React.SyntheticEvent, newValue: number) => {
+      setSelectedTab(newValue)
+    },
+    []
+  )
 
   const handleFilterChange = useCallback(
-    (newFilters: { search: string; status: GiftAvailabilityStatus; orderBy: OrderBy }) => {
+    (newFilters: { search: string; status: GiftAvailabilityStatus }) => {
       setFilters(newFilters)
     },
     []
@@ -272,8 +264,8 @@ export function GiftList({ eventId, categories }: GiftListProps) {
               py: 8,
             }}
           >
-            <GiftIcon sx={{ fontSize: 60, color: 'primary.main', mb: 2 }} />
-            <Typography variant="h6" color="text.primary">
+            <GiftIcon sx={{ fontSize: 60, color: 'text.secondary', mb: 2 }} />
+            <Typography variant="h6" color="text.secondary">
               Nenhum presente encontrado nesta categoria
             </Typography>
           </Box>
@@ -290,6 +282,8 @@ export function GiftList({ eventId, categories }: GiftListProps) {
             }}
           >
             {gifts?.map((gift) => {
+              const progressPercentage = gift.price > 0 ? (gift.totalContributed / gift.price) * 100 : 0
+
               return (
                 <Box key={gift.id}>
                   <Card
@@ -328,10 +322,9 @@ export function GiftList({ eventId, categories }: GiftListProps) {
                           target.src = '/images/Image-not-found.png'
                         }}
                         sx={{
-                          backgroundColor: 'white',
                           width: '100%',
                           height: '100%',
-                          objectFit: 'contain',
+                          objectFit: 'cover',
                           objectPosition: 'center',
                         }}
                       />
@@ -394,7 +387,7 @@ export function GiftList({ eventId, categories }: GiftListProps) {
                           <Typography variant="body2" fontWeight={600}>
                             Preço médio: {formatCurrency(gift.price)}
                           </Typography>
-                          <Tooltip
+                          <Tooltip 
                             title="Valor estimado com base em pesquisas realizadas. Este é apenas um valor de referência para compreensão do presente."
                             arrow
                             placement="top"
@@ -411,12 +404,12 @@ export function GiftList({ eventId, categories }: GiftListProps) {
                               },
                             }}
                           >
-                            <IconButton
-                              size="small"
-                              sx={{
-                                p: 0,
+                            <IconButton 
+                              size="small" 
+                              sx={{ 
+                                p: 0, 
                                 ml: 0.5,
-                                '&:hover': { bgcolor: 'transparent' },
+                                '&:hover': { bgcolor: 'transparent' } 
                               }}
                             >
                               <InfoIcon sx={{ fontSize: 16, color: 'info.main' }} />
@@ -424,7 +417,7 @@ export function GiftList({ eventId, categories }: GiftListProps) {
                           </Tooltip>
                         </Box>
                       </Stack>
-
+                    
                       {/* Botão */}
                       <Button
                         variant={gift.isAvailable ? 'contained' : 'outlined'}
@@ -476,3 +469,4 @@ export function GiftList({ eventId, categories }: GiftListProps) {
     </Box>
   )
 }
+

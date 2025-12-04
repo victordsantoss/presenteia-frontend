@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { handleApiError } from '@/configs/api/ssr-fetch'
-import CreateGiftPage from '@/modules/event/detail/gifts/page'
+import CreateGiftPage from '@/modules/event/gifts/page'
 import { Event } from '@/services/domain/event.types'
 import { getEventBySlug } from '@/services/server/event.service'
 

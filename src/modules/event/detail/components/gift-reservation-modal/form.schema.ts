@@ -8,21 +8,33 @@ export const GiftReservationSchema = z.object({
     .max(100, { message: 'O nome deve ter no máximo 100 caracteres' })
     .trim(),
   guestEmail: z
-    .union([z.string().email({ message: 'Insira um email válido' }).trim(), z.literal('')])
-    .optional(),
-  guestPhone: z
     .string()
-    .regex(
-      /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/,
-      'Telefone inválido. Use o formato (11) 98765-4321'
-    )
     .trim()
     .optional()
-    .or(z.literal('')),
+    .refine(
+      (val) => !val || val === '' || z.string().email().safeParse(val).success,
+      { message: 'Insira um email válido' }
+    )
+    .transform((val) => val || ''),
+  guestPhone: z
+    .string()
+    .trim()
+    .optional()
+    .refine(
+      (val) =>
+        !val ||
+        val === '' ||
+        /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/.test(
+          val
+        ),
+      { message: 'Telefone inválido. Use o formato (11) 98765-4321' }
+    )
+    .transform((val) => val || ''),
   message: z
     .string()
     .max(500, { message: 'A mensagem deve ter no máximo 500 caracteres' })
-    .optional(),
+    .optional()
+    .transform((val) => val || ''),
 })
 
 export type GiftReservationFormValues = z.infer<typeof GiftReservationSchema>

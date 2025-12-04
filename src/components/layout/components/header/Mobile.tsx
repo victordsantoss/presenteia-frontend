@@ -19,7 +19,7 @@ import { Menu as MenuIcon, Close as CloseIcon, CardGiftcard as GiftIcon } from '
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { menuItems } from './items'
-import { DisabledTooltip } from '@/components/DisabledTooltip'
+import { DisabledTooltip } from '@/components/disabled-tooltip'
 
 export function HeaderMobile() {
   const [drawerOpen, setDrawerOpen] = useState(false)

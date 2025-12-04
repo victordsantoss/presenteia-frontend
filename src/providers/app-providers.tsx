@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import defaultTheme from '@/configs/styles/theme/default-theme'
 import { QueryProvider } from './query-provider'
-import { PublicLayout } from '@/components/layout/Public'
+import { PublicLayout } from '@/components/layout/public'
 import { MetadataProvider } from '@/contexts/metadata.context'
 
 interface AppProvidersProps {

@@ -3,7 +3,7 @@
 import { Box, Container, Typography, Button, Stack } from '@mui/material'
 import { Add as AddIcon, Search as SearchIcon } from '@mui/icons-material'
 import Link from 'next/link'
-import { DisabledTooltip } from '@/components/DisabledTooltip'
+import { DisabledTooltip } from '@/components/disabled-tooltip'
 
 const badges = [
   { icon: '✨', text: 'Grátis para sempre' },

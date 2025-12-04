@@ -1,8 +1,8 @@
 import { Box } from '@mui/material'
 import { Event } from '@/services/domain/event.types'
 import { Gift } from '@/services/domain/gift.types'
-import { Header } from './components/Header'
-import { GiftList } from './components/GiftList'
+import { Header } from './components/header'
+import { Data } from './components/table/data'
 
 interface EventDetailPageProps {
   data: Event.IGetEventResponse
@@ -13,7 +13,7 @@ export default function EventDetailPage({ data, categories }: EventDetailPagePro
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.paper' }}>
       <Header data={data} />
-      <GiftList eventId={data.id} categories={categories} />
+      <Data eventId={data.id} categories={categories} />
     </Box>
   )
 }

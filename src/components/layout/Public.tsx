@@ -2,8 +2,8 @@
 
 import { ReactNode } from 'react'
 import { Box, useMediaQuery, useTheme } from '@mui/material'
-import { Header } from './components/header/Desktop'
-import { HeaderMobile } from './components/header/Mobile'
+import { Header } from './components/header/desktop'
+import { HeaderMobile } from './components/header/mobile'
 import { Footer } from './components/footer'
 
 interface PublicLayoutProps {

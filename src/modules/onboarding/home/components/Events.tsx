@@ -11,7 +11,7 @@ import {
   School as GraduationIcon,
   WorkspacePremium as AnniversaryIcon,
 } from '@mui/icons-material'
-import { DisabledTooltip } from '@/components/DisabledTooltip'
+import { DisabledTooltip } from '@/components/disabled-tooltip'
 
 const events = [
   {

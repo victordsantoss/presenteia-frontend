@@ -3,7 +3,7 @@
 import { Box, Container, Typography, Link as MuiLink, IconButton, Divider } from '@mui/material'
 import Link from 'next/link'
 import { companyInfo, quickLinks, supportLinks, socialLinks, footerBottomLinks } from './items'
-import { DisabledTooltip } from '@/components/DisabledTooltip'
+import { DisabledTooltip } from '@/components/disabled-tooltip'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()

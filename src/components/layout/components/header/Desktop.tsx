@@ -5,7 +5,7 @@ import { CardGiftcard as GiftIcon } from '@mui/icons-material'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { menuItems } from './items'
-import { DisabledTooltip } from '@/components/DisabledTooltip'
+import { DisabledTooltip } from '@/components/disabled-tooltip'
 
 export function Header() {
   const pathname = usePathname()
