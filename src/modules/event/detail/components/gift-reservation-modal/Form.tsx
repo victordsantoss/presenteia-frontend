@@ -8,12 +8,12 @@ import {
 } from 'react-hook-form'
 import type { GiftReservationFormValues } from './form.schema'
 
-interface GiftReservationFormProps {
+interface IGiftReservationFormProps {
   methods: UseFormReturn<GiftReservationFormValues>
   isPending: boolean
 }
 
-export function GiftReservationForm({ methods, isPending }: GiftReservationFormProps) {
+export function GiftReservationForm({ methods, isPending }: IGiftReservationFormProps) {
   return (
     <Stack spacing={2.5}>
       {/* Nome */}

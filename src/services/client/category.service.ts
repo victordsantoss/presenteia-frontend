@@ -18,6 +18,3 @@ export const CategoryService = {
     return data
   },
 }
-
-
-

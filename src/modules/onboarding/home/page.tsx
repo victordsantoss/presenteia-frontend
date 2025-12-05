@@ -1,8 +1,8 @@
-import { Banner } from './components/Banner'
-import { HowItWorks } from './components/HowItWorks'
-import { Events } from './components/Events'
-import { Reviews } from './components/Reviews'
-import { GiftList } from './components/GiftList'
+import { Banner } from './components/banner'
+import { HowItWorks } from './components/how-it-works'
+import { Events } from './components/events'
+import { Reviews } from './components/reviews'
+import { GiftList } from './components/gift-list'
 
 export default async function HomePage() {
   return (

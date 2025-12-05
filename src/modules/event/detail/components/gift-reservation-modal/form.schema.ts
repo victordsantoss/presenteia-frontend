@@ -11,10 +11,9 @@ export const GiftReservationSchema = z.object({
     .string()
     .trim()
     .optional()
-    .refine(
-      (val) => !val || val === '' || z.string().email().safeParse(val).success,
-      { message: 'Insira um email válido' }
-    )
+    .refine((val) => !val || val === '' || z.string().email().safeParse(val).success, {
+      message: 'Insira um email válido',
+    })
     .transform((val) => val || ''),
   guestPhone: z
     .string()

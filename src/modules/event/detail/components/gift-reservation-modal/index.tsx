@@ -22,9 +22,9 @@ import { Gift } from '@/services/domain/gift.types'
 import { GiftService } from '@/services/client/gift.service'
 import { formatCurrency } from '@/common/utils/format'
 import { GiftReservationSchema, type GiftReservationFormValues } from './form.schema'
-import { GiftReservationForm } from './Form'
+import { GiftReservationForm } from './form'
 
-interface GiftReservationModalProps {
+interface IGiftReservationModalProps {
   open: boolean
   onClose: () => void
   gift: Gift.IGiftItem | null
@@ -36,7 +36,7 @@ export function GiftReservationModal({
   onClose,
   gift,
   onSuccess,
-}: GiftReservationModalProps) {
+}: IGiftReservationModalProps) {
   const [apiError, setApiError] = useState<string | null>(null)
 
   const methods = useForm<GiftReservationFormValues>({

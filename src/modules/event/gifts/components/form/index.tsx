@@ -21,13 +21,13 @@ import {
   PriorityHigh as PriorityIcon,
 } from '@mui/icons-material'
 import { Controller, type UseFormReturn } from 'react-hook-form'
-import type { CreateGiftFormValues } from '../form.schema'
+import type { CreateGiftFormValues } from './form.schema'
 import type { ICategoryItem } from '@/services/domain/category.types'
 import { GiftPriority } from '@/services/domain/gift.types'
-import { ImageUpload } from './ImageUpload'
-import { LinksInput } from './LinksInput'
+import { ImageUpload } from '../image-upload'
+import { LinksInput } from '../links-input'
 
-interface GiftFormProps {
+interface IGiftFormProps {
   methods: UseFormReturn<CreateGiftFormValues>
   categories: ICategoryItem[]
   isPending: boolean
@@ -39,7 +39,7 @@ const priorityOptions = [
   { value: GiftPriority.HIGH, label: 'Alta' },
 ]
 
-export function GiftForm({ methods, categories, isPending }: GiftFormProps) {
+export function GiftForm({ methods, categories, isPending }: IGiftFormProps) {
   const {
     control,
     formState: { errors },
@@ -166,7 +166,7 @@ export function GiftForm({ methods, categories, isPending }: GiftFormProps) {
           name="categoryId"
           control={control}
           render={({ field }) => (
-            <FormControl fullWidth error={!!errors.categoryId} disabled={isPending}>
+            <FormControl fullWidth error={!!errors.categoryId} disabled={isPending} required>
               <InputLabel>Categoria</InputLabel>
               <Select
                 {...field}
@@ -178,9 +178,6 @@ export function GiftForm({ methods, categories, isPending }: GiftFormProps) {
                   </InputAdornment>
                 }
               >
-                <MenuItem value="">
-                  <em>Nenhuma</em>
-                </MenuItem>
                 {categories.map((category) => (
                   <MenuItem key={category.id} value={category.id}>
                     {category.name}

@@ -1,15 +1,15 @@
 import { Box, Button, IconButton, TextField, Typography, Stack } from '@mui/material'
 import { Add as AddIcon, Delete as DeleteIcon, Link as LinkIcon } from '@mui/icons-material'
 import { Control, FieldError, useWatch, useFormContext } from 'react-hook-form'
-import type { CreateGiftFormValues } from './form.schema'
+import type { CreateGiftFormValues } from './form/form.schema'
 
-interface LinksInputProps {
+interface ILinksInputProps {
   control: Control<CreateGiftFormValues>
   error?: FieldError
   disabled?: boolean
 }
 
-export function LinksInput({ control, error, disabled }: LinksInputProps) {
+export function LinksInput({ control, error, disabled }: ILinksInputProps) {
   const { setValue } = useFormContext<CreateGiftFormValues>()
   const links = useWatch({ control, name: 'links' }) || []
 

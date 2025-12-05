@@ -3,14 +3,14 @@ import { CloudUpload as UploadIcon, Close as CloseIcon } from '@mui/icons-materi
 import { useRef, useState } from 'react'
 import Image from 'next/image'
 
-interface ImageUploadProps {
+interface IImageUploadProps {
   value: File | null
   onChange: (file: File | null) => void
   error?: string
   disabled?: boolean
 }
 
-export function ImageUpload({ onChange, error, disabled }: ImageUploadProps) {
+export function ImageUpload({ onChange, error, disabled }: IImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [preview, setPreview] = useState<string | null>(null)
 

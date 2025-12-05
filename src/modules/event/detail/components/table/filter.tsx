@@ -16,7 +16,7 @@ import { GiftAvailabilityStatus } from '@/services/domain/gift.types'
 
 export type OrderBy = 'none' | 'price_asc' | 'price_desc'
 
-interface FilterProps {
+interface IFilterProps {
   onFilterChange: (filters: {
     search: string
     status: GiftAvailabilityStatus
@@ -24,7 +24,7 @@ interface FilterProps {
   }) => void
 }
 
-export function Filter({ onFilterChange }: FilterProps) {
+export function Filter({ onFilterChange }: IFilterProps) {
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState<GiftAvailabilityStatus>(GiftAvailabilityStatus.ALL)
   const [orderBy, setOrderBy] = useState<OrderBy>('none')

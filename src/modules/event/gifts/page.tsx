@@ -19,19 +19,19 @@ import {
 import { ArrowBack as BackIcon, Save as SaveIcon } from '@mui/icons-material'
 import Link from 'next/link'
 import { GiftForm } from './components/form'
-import { CreateGiftSchema, type CreateGiftFormValues } from './components/form.schema'
+import { CreateGiftSchema, type CreateGiftFormValues } from './components/form/form.schema'
 import { GiftService } from '@/services/client/gift.service'
 import { CategoryService } from '@/services/client/category.service'
 import { GiftPriority } from '@/services/domain/gift.types'
 import { isAxiosError } from 'axios'
 
-interface CreateGiftPageProps {
+interface ICreateGiftPageProps {
   eventId: string
   eventSlug: string
   eventTitle: string
 }
 
-export default function CreateGiftPage({ eventId, eventSlug, eventTitle }: CreateGiftPageProps) {
+export default function CreateGiftPage({ eventId, eventSlug, eventTitle }: ICreateGiftPageProps) {
   const router = useRouter()
   const [apiError, setApiError] = useState<string | null>(null)
 
